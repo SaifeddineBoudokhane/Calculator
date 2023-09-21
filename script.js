@@ -1,3 +1,10 @@
+//main variables
+let firstNumber=0,
+    secondNumber=0,
+    currentNumber=true;//this variable tells the program where to store the current integer:true=firsNumber/false=secondNumber
+    currentOperator=null;
+const displayValue=["0"];
+//operating functions
 function add(a,b){
     return a+b;
 }
@@ -14,12 +21,6 @@ function divide(a,b){
     return a/b;
 }
 
-let firstNumber=0,
-    secondNumber=0,
-    currentNumber=1;//this variable tells the program where to store the current integer:1=firsNumber/2=secondNumber
-    operator=null;
-const displayValue=["0"];
-
 function operate(operator,firstNb,secondNmb) {
     switch(operator){
         case "+":
@@ -35,6 +36,16 @@ function operate(operator,firstNb,secondNmb) {
             return divide(firstNb,secondNmb);
             break;   }
 }
+    //this function stores the inputted number inside the correct variable
+function storeNumber(number){
+    if(currentNumber){
+        firstNumber=number;
+    }else{
+        secondNumber=number;
+    }
+    currentNumber=!currentNumber;
+}
+
 //display
 function populateBottomDisplay(content=""){
     const bottomDisplay = document.getElementById("bottomDisplay");
@@ -48,7 +59,8 @@ function populateTopDisplay(content=""){
 function clearDisplays(){
     firstNumber=0;
     secondNumber=0;
-    operator=null;
+    currentNumber=true;
+    currentOperator=null;
     displayValue.length=0;
     displayValue.push("0");
     populateBottomDisplay(displayValue.join(""));
@@ -77,10 +89,12 @@ const pointBtn = document.getElementById("point");
 //set buttons eventListeners
     //clear button eventListener
 clearBtn.addEventListener("click",clearDisplays)
-
+deleteBtn.addEventListener("click",()=>{
+    displayValue.pop();
+    populateBottomDisplay(displayValue.join(""));
+})
     //number buttons eventListener
 oneBtn.addEventListener("click",()=>{
-    console.log(displayValue[0]);
     if(displayValue[0]=='0'){
         displayValue.pop();
     }
@@ -119,7 +133,7 @@ sixBtn.addEventListener("click",()=>{
     if(displayValue[0]=='0'){
         displayValue.pop();
     }
-    displayValue.push("1");
+    displayValue.push("6");
     populateBottomDisplay(displayValue.join(""));
 });
 sevenBtn.addEventListener("click",()=>{
@@ -148,4 +162,41 @@ zeroBtn.addEventListener("click",()=>{
         displayValue.push("0");
     }
     populateBottomDisplay(displayValue.join(""));
+});
+
+//operator buttons eventListener
+equalBtn.addEventListener("click",()=>{
+    let string=displayValue.join("");
+    let number=Number(string);
+    displayValue.length=0;
+    storeNumber(number);
+    const lastNmb=operate(currentOperator,firstNumber,secondNumber);
+    currentNumber ? 
+                    populateTopDisplay(firstNumber + " " + currentOperator + " " + secondNumber + "=") :
+                    populateTopDisplay(secondNumber + " " + currentOperator + " " + firstNumber + "=");
+    currentOperator=null;
+    populateBottomDisplay(lastNmb);
+    displayValue.push(lastNmb);
+    storeNumber(lastNmb);
+});
+
+addBtn.addEventListener("click",()=>{
+    if(currentOperator==null){
+        currentOperator="+";
+        let string=displayValue.join("");
+        let number=Number(string);
+        storeNumber(number);
+        populateTopDisplay(string+" +");
+        displayValue.length=0;
+    } else {
+        let string=displayValue.join("");
+        let number=Number(string);
+        displayValue.length=0;
+        storeNumber(number);
+        const lastNmb=operate(currentOperator,firstNumber,secondNumber);
+        currentOperator="+"
+        storeNumber(lastNmb);
+        populateTopDisplay(lastNmb+" +");
+        displayValue.length=0;
+    }
 });
