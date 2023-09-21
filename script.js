@@ -29,11 +29,11 @@ function operate(operator,firstNb,secondNmb) {
         case "-":
             return subtract(firstNb,secondNmb);
             break;
-        case "*":
+        case "×":
             return multiply(firstNb,secondNmb);
             break;
-        case "/":
-            return divide(firstNb,secondNmb);
+        case "÷":
+            return divide(firstNb,secondNmb).toFixed(7);
             break;   }
 }
     //this function stores the inputted number inside the correct variable
@@ -95,81 +95,92 @@ deleteBtn.addEventListener("click",()=>{
 })
     //number buttons eventListener
 oneBtn.addEventListener("click",()=>{
-    if(displayValue[0]=='0'){
+    if(displayValue[0]=='0'&&displayValue[1]!="."){
         displayValue.pop();
     }
     displayValue.push("1");
     populateBottomDisplay(displayValue.join(""));
 });
 twoBtn.addEventListener("click",()=>{
-    if(displayValue[0]=='0'){
+    if(displayValue[0]=='0'&&displayValue[1]!="."){
         displayValue.pop();
     }
     displayValue.push("2");
     populateBottomDisplay(displayValue.join(""));
 });
 threeBtn.addEventListener("click",()=>{
-    if(displayValue[0]=='0'){
+    if(displayValue[0]=='0'&&displayValue[1]!="."){
         displayValue.pop();
     }
     displayValue.push("3");
     populateBottomDisplay(displayValue.join(""));
 });
 fourBtn.addEventListener("click",()=>{
-    if(displayValue[0]=='0'){
+    if(displayValue[0]=='0'&&displayValue[1]!="."){
         displayValue.pop();
     }
     displayValue.push("4");
     populateBottomDisplay(displayValue.join(""));
 });
 fiveBtn.addEventListener("click",()=>{
-    if(displayValue[0]=='0'){
+    if(displayValue[0]=='0'&&displayValue[1]!="."){
         displayValue.pop();
     }
     displayValue.push("5");
     populateBottomDisplay(displayValue.join(""));
 });
 sixBtn.addEventListener("click",()=>{
-    if(displayValue[0]=='0'){
+    if(displayValue[0]=='0'&&displayValue[1]!="."){
         displayValue.pop();
     }
     displayValue.push("6");
     populateBottomDisplay(displayValue.join(""));
 });
 sevenBtn.addEventListener("click",()=>{
-    if(displayValue[0]=='0'){
+    if(displayValue[0]=='0'&&displayValue[1]!="."){
         displayValue.pop();
     }
     displayValue.push("7");
     populateBottomDisplay(displayValue.join(""));
 });
 eightBtn.addEventListener("click",()=>{
-    if(displayValue[0]=='0'){
+    if(displayValue[0]=='0'&&displayValue[1]!="."){
         displayValue.pop();
     }
     displayValue.push("8");
     populateBottomDisplay(displayValue.join(""));
 });
 nineBtn.addEventListener("click",()=>{
-    if(displayValue[0]=='0'){
+    if(displayValue[0]=='0'&&displayValue[1]!="."){
         displayValue.pop();
     }
     displayValue.push("9");
     populateBottomDisplay(displayValue.join(""));
 });
 zeroBtn.addEventListener("click",()=>{
-    if (displayValue.length==0||displayValue.length>1){
+    if (displayValue.length==0||displayValue.length>1||(displayValue.length==1&&displayValue[0]!="0")){
         displayValue.push("0");
     }
     populateBottomDisplay(displayValue.join(""));
 });
+pointBtn.addEventListener("click",()=>{
+    displayValue.push(".");
+    populateBottomDisplay(displayValue.join(""));
+});
 
-//operator buttons eventListener
-equalBtn.addEventListener("click",()=>{
+//operator buttons eventListeners
+    //functions for script that repeats (being organized and all)
+function storeDisplayValue(){
     let string=displayValue.join("");
     let number=Number(string);
     displayValue.length=0;
     storeNumber(number);
+}
+
+    //the eventListeners
+equalBtn.addEventListener("click",()=>{
+    if(currentOperator!=null){
+    storeDisplayValue();
     const lastNmb=operate(currentOperator,firstNumber,secondNumber);
     currentNumber ? 
                     populateTopDisplay(firstNumber + " " + currentOperator + " " + secondNumber + "=") :
@@ -178,25 +189,73 @@ equalBtn.addEventListener("click",()=>{
     populateBottomDisplay(lastNmb);
     displayValue.push(lastNmb);
     storeNumber(lastNmb);
+    }
 });
 
 addBtn.addEventListener("click",()=>{
-    if(currentOperator==null){
-        currentOperator="+";
-        let string=displayValue.join("");
-        let number=Number(string);
-        storeNumber(number);
-        populateTopDisplay(string+" +");
-        displayValue.length=0;
-    } else {
-        let string=displayValue.join("");
-        let number=Number(string);
-        displayValue.length=0;
-        storeNumber(number);
-        const lastNmb=operate(currentOperator,firstNumber,secondNumber);
-        currentOperator="+"
-        storeNumber(lastNmb);
-        populateTopDisplay(lastNmb+" +");
-        displayValue.length=0;
+    if(displayValue.length>0){
+        if(currentOperator==null){
+            populateTopDisplay(displayValue.join("")+" +");
+            currentOperator="+";
+            storeDisplayValue();
+        } else {
+            storeDisplayValue();
+            const lastNmb=operate(currentOperator,firstNumber,secondNumber);
+            currentOperator="+"
+            storeNumber(lastNmb);
+            populateTopDisplay(lastNmb+" +");
+            displayValue.length=0;
+        }
+    }
+});
+
+subtractBtn.addEventListener("click",()=>{
+    if(displayValue.length>0){
+        if(currentOperator==null){
+            populateTopDisplay(displayValue.join("")+" -");
+            currentOperator="-";
+            storeDisplayValue();
+        } else {
+            storeDisplayValue();
+            const lastNmb=operate(currentOperator,firstNumber,secondNumber);
+            currentOperator="-"
+            storeNumber(lastNmb);
+            populateTopDisplay(lastNmb+" -");
+            displayValue.length=0;
+        }
+    }
+});
+
+multiplyBtn.addEventListener("click",()=>{
+    if(displayValue.length>0){
+        if(currentOperator==null){
+            populateTopDisplay(displayValue.join("")+" ×");
+            currentOperator="×";
+            storeDisplayValue();
+        } else {
+            storeDisplayValue();
+            const lastNmb=operate(currentOperator,firstNumber,secondNumber);
+            currentOperator="×"
+            storeNumber(lastNmb);
+            populateTopDisplay(lastNmb+" ×");
+            displayValue.length=0;
+        }
+    }
+});
+
+divideBtn.addEventListener("click",()=>{
+    if(displayValue.length>0){
+        if(currentOperator==null){
+            populateTopDisplay(displayValue.join("")+" ÷");
+            currentOperator="÷";
+            storeDisplayValue();
+        } else {
+            storeDisplayValue();
+            const lastNmb=operate(currentOperator,firstNumber,secondNumber);
+            currentOperator="÷"
+            storeNumber(lastNmb);
+            populateTopDisplay(lastNmb+" ÷");
+            displayValue.length=0;
+        }
     }
 });
