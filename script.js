@@ -317,7 +317,6 @@ divideBtn.addEventListener("click",()=>{
 //keyboard support
 
 document.addEventListener("keyup",(event)=>{
-    console.log(event.key);
     switch(event.key){
         case "1":
             document.getElementById("one").click();
@@ -378,7 +377,7 @@ document.addEventListener("keyup",(event)=>{
         case ".":
             document.getElementById("point").click();
             break;
-            
+
         case "Enter":
         case "=":
             document.getElementById("equal").click();
