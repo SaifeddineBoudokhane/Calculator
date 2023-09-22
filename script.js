@@ -1,7 +1,8 @@
 //main variables
 let firstNumber=0,
     secondNumber=0,
-    currentNumber=true;//this variable tells the program where to store the current integer:true=firsNumber/false=secondNumber
+    currentNumber=true,//this variable tells the program where to store the current integer:true=firsNumber/false=secondNumber
+    equalWasClickedLast=false,
     currentOperator=null;
 const displayValue=["0"];
 //operating functions
@@ -94,7 +95,16 @@ deleteBtn.addEventListener("click",()=>{
     populateBottomDisplay(displayValue.join(""));
 })
     //number buttons eventListener
+        //functions for script that repeats (being organized and all)
+function isEqualClickedLast(){
+    if(equalWasClickedLast==true){
+        displayValue.length=0;
+        equalWasClickedLast=false;
+    }
+}
+        //the evenListeners
 oneBtn.addEventListener("click",()=>{
+    isEqualClickedLast();
     if(displayValue[0]=='0'&&displayValue[1]!="."){
         displayValue.pop();
     }
@@ -102,6 +112,7 @@ oneBtn.addEventListener("click",()=>{
     populateBottomDisplay(displayValue.join(""));
 });
 twoBtn.addEventListener("click",()=>{
+    isEqualClickedLast();
     if(displayValue[0]=='0'&&displayValue[1]!="."){
         displayValue.pop();
     }
@@ -109,6 +120,7 @@ twoBtn.addEventListener("click",()=>{
     populateBottomDisplay(displayValue.join(""));
 });
 threeBtn.addEventListener("click",()=>{
+    isEqualClickedLast();
     if(displayValue[0]=='0'&&displayValue[1]!="."){
         displayValue.pop();
     }
@@ -116,6 +128,7 @@ threeBtn.addEventListener("click",()=>{
     populateBottomDisplay(displayValue.join(""));
 });
 fourBtn.addEventListener("click",()=>{
+    isEqualClickedLast();
     if(displayValue[0]=='0'&&displayValue[1]!="."){
         displayValue.pop();
     }
@@ -123,6 +136,7 @@ fourBtn.addEventListener("click",()=>{
     populateBottomDisplay(displayValue.join(""));
 });
 fiveBtn.addEventListener("click",()=>{
+    isEqualClickedLast();
     if(displayValue[0]=='0'&&displayValue[1]!="."){
         displayValue.pop();
     }
@@ -130,6 +144,7 @@ fiveBtn.addEventListener("click",()=>{
     populateBottomDisplay(displayValue.join(""));
 });
 sixBtn.addEventListener("click",()=>{
+    isEqualClickedLast();
     if(displayValue[0]=='0'&&displayValue[1]!="."){
         displayValue.pop();
     }
@@ -137,6 +152,7 @@ sixBtn.addEventListener("click",()=>{
     populateBottomDisplay(displayValue.join(""));
 });
 sevenBtn.addEventListener("click",()=>{
+    isEqualClickedLast();
     if(displayValue[0]=='0'&&displayValue[1]!="."){
         displayValue.pop();
     }
@@ -144,6 +160,7 @@ sevenBtn.addEventListener("click",()=>{
     populateBottomDisplay(displayValue.join(""));
 });
 eightBtn.addEventListener("click",()=>{
+    isEqualClickedLast();
     if(displayValue[0]=='0'&&displayValue[1]!="."){
         displayValue.pop();
     }
@@ -151,6 +168,7 @@ eightBtn.addEventListener("click",()=>{
     populateBottomDisplay(displayValue.join(""));
 });
 nineBtn.addEventListener("click",()=>{
+    isEqualClickedLast();
     if(displayValue[0]=='0'&&displayValue[1]!="."){
         displayValue.pop();
     }
@@ -158,20 +176,25 @@ nineBtn.addEventListener("click",()=>{
     populateBottomDisplay(displayValue.join(""));
 });
 zeroBtn.addEventListener("click",()=>{
+    isEqualClickedLast();
     if (displayValue.length==0||displayValue.length>1||(displayValue.length==1&&displayValue[0]!="0")){
         displayValue.push("0");
     }
     populateBottomDisplay(displayValue.join(""));
 });
 pointBtn.addEventListener("click",()=>{
+    isEqualClickedLast();
     if(displayValue.indexOf(".")==-1){
+        if(displayValue.length==0){
+            displayValue.push('0');
+        }
         displayValue.push(".");
         populateBottomDisplay(displayValue.join(""));
     }
 });
 
-//operator buttons eventListeners
-    //functions for script that repeats (being organized and all)
+    //operator buttons eventListeners
+        //functions for script that repeats (being organized and all)
 function storeDisplayValue(){
     let string=displayValue.join("");
     let number=Number(string);
@@ -179,24 +202,24 @@ function storeDisplayValue(){
     storeNumber(number);
 }
 
-    //the eventListeners
+        //the eventListeners
 equalBtn.addEventListener("click",()=>{
     if(currentOperator!=null){
-    storeDisplayValue();
-    let lastNmb;
-    currentNumber ? 
-                    lastNmb=operate(currentOperator,firstNumber,secondNumber):
-                    lastNmb=operate(currentOperator,secondNumber,firstNumber);
-    currentNumber ?
-    populateTopDisplay(firstNumber + " " + currentOperator + " " + secondNumber + "="):
-    populateTopDisplay(secondNumber + " " + currentOperator + " " + firstNumber + "=");
-    currentOperator=null;
-    populateBottomDisplay(lastNmb);
-    displayValue.push(lastNmb);
-    storeNumber(lastNmb);
+        storeDisplayValue();
+        let lastNmb;
+        currentNumber ? 
+                        lastNmb=operate(currentOperator,firstNumber,secondNumber):
+                        lastNmb=operate(currentOperator,secondNumber,firstNumber);
+        currentNumber ?
+        populateTopDisplay(firstNumber + " " + currentOperator + " " + secondNumber + "="):
+        populateTopDisplay(secondNumber + " " + currentOperator + " " + firstNumber + "=");
+        currentOperator=null;
+        populateBottomDisplay(lastNmb);
+        displayValue.push(lastNmb);
+        storeNumber(lastNmb);
+        equalWasClickedLast=true;
     }
 });
-
 addBtn.addEventListener("click",()=>{
     if(displayValue.length>0){
         if(currentOperator==null){
