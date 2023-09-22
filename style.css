@@ -19,19 +19,16 @@ main{
 
 #calculator {
     width: fit-content;
-    height: 700px;
     background-color: gray;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    display: block;
+    margin-left: auto;
     padding: 10px;
     border: 5px solid black;
 }
 
 #display {
     width: 380px;
-    height: 150px;
+    height: fit-content;
     border: 5px solid black;
     background-color: rgb(232, 232, 232);
     margin: 10px;
@@ -41,16 +38,19 @@ main{
 #topDisplay, #bottomDisplay{
     text-align: right;
     border-radius: 0;
+    text-wrap: wrap;
 }
 #topDisplay {
-    height: 40%;
+    min-height: 60px;
     font-weight: 300;
-    font-size: 40px;
+    font-size: 30px;
+    word-break: break-all;
 }
 #bottomDisplay{
-    height: 60%;
+    min-height: 64px;
     font-weight: 400;
     font-size: 60px;
+    word-break: break-all;
 }
 
 button{
@@ -67,6 +67,8 @@ button:active{
 }
 
 #clear-delete{
+    margin: 10px;
+    padding: 10px;
     width: 380px;
     display: flex;
     justify-content: space-between;
@@ -83,6 +85,7 @@ button:active{
 }
 
 #calcButtons{
+    margin: 10px;
     width: 380px;
     display: flex;
     flex-wrap: wrap;
