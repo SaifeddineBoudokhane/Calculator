@@ -34,7 +34,7 @@ function operate(operator,firstNb,secondNmb) {
             return multiply(firstNb,secondNmb);
             break;
         case "÷":
-            return parseFloat(divide(firstNb,secondNmb).toFixed(3));
+            return parseFloat(divide(firstNb,secondNmb)).toExponential();
             break;   }
 }
     //this function stores the inputted number inside the correct variable
