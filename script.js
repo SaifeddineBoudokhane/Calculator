@@ -201,7 +201,13 @@ function storeDisplayValue(){
     displayValue.length=0;
     storeNumber(number);
 }
-
+function dividedByZero(number){
+    if (number==Infinity||isNaN(number)){
+        console.log(number);
+        clearDisplays();
+        populateBottomDisplay("you ok?");
+    }
+}
         //the eventListeners
 equalBtn.addEventListener("click",()=>{
     if(currentOperator!=null){
@@ -218,6 +224,7 @@ equalBtn.addEventListener("click",()=>{
         displayValue.push(lastNmb);
         storeNumber(lastNmb);
         equalWasClickedLast=true;
+        dividedByZero(lastNmb);
     }
 });
 addBtn.addEventListener("click",()=>{
@@ -237,6 +244,7 @@ addBtn.addEventListener("click",()=>{
             storeNumber(lastNmb);
             populateTopDisplay(lastNmb+" +");
             displayValue.length=0;
+            dividedByZero(lastNmb);
         }
     }
 });
@@ -258,6 +266,7 @@ subtractBtn.addEventListener("click",()=>{
             storeNumber(lastNmb);
             populateTopDisplay(lastNmb+" -");
             displayValue.length=0;
+            dividedByZero(lastNmb);
         }
     }
 });
@@ -279,6 +288,7 @@ multiplyBtn.addEventListener("click",()=>{
             storeNumber(lastNmb);
             populateTopDisplay(lastNmb+" ×");
             displayValue.length=0;
+            dividedByZero(lastNmb);
         }
     }
 });
@@ -300,6 +310,7 @@ divideBtn.addEventListener("click",()=>{
             storeNumber(lastNmb);
             populateTopDisplay(lastNmb+" ÷");
             displayValue.length=0;
+            dividedByZero(lastNmb);
         }
     }
 });
