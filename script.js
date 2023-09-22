@@ -33,7 +33,7 @@ function operate(operator,firstNb,secondNmb) {
             return multiply(firstNb,secondNmb);
             break;
         case "÷":
-            return divide(firstNb,secondNmb).toFixed(7);
+            return parseFloat(divide(firstNb,secondNmb).toFixed(3));
             break;   }
 }
     //this function stores the inputted number inside the correct variable
@@ -164,8 +164,10 @@ zeroBtn.addEventListener("click",()=>{
     populateBottomDisplay(displayValue.join(""));
 });
 pointBtn.addEventListener("click",()=>{
-    displayValue.push(".");
-    populateBottomDisplay(displayValue.join(""));
+    if(displayValue.indexOf(".")==-1){
+        displayValue.push(".");
+        populateBottomDisplay(displayValue.join(""));
+    }
 });
 
 //operator buttons eventListeners
@@ -181,10 +183,13 @@ function storeDisplayValue(){
 equalBtn.addEventListener("click",()=>{
     if(currentOperator!=null){
     storeDisplayValue();
-    const lastNmb=operate(currentOperator,firstNumber,secondNumber);
+    let lastNmb;
     currentNumber ? 
-                    populateTopDisplay(firstNumber + " " + currentOperator + " " + secondNumber + "=") :
-                    populateTopDisplay(secondNumber + " " + currentOperator + " " + firstNumber + "=");
+                    lastNmb=operate(currentOperator,firstNumber,secondNumber):
+                    lastNmb=operate(currentOperator,secondNumber,firstNumber);
+    currentNumber ?
+    populateTopDisplay(firstNumber + " " + currentOperator + " " + secondNumber + "="):
+    populateTopDisplay(secondNumber + " " + currentOperator + " " + firstNumber + "=");
     currentOperator=null;
     populateBottomDisplay(lastNmb);
     displayValue.push(lastNmb);
@@ -200,7 +205,11 @@ addBtn.addEventListener("click",()=>{
             storeDisplayValue();
         } else {
             storeDisplayValue();
-            const lastNmb=operate(currentOperator,firstNumber,secondNumber);
+            let lastNmb;
+            currentNumber ? 
+                            lastNmb=operate(currentOperator,firstNumber,secondNumber):
+                            lastNmb=operate(currentOperator,secondNumber,firstNumber);
+            populateTopDisplay(firstNumber + " " + currentOperator + " " + secondNumber + "=");
             currentOperator="+"
             storeNumber(lastNmb);
             populateTopDisplay(lastNmb+" +");
@@ -217,7 +226,11 @@ subtractBtn.addEventListener("click",()=>{
             storeDisplayValue();
         } else {
             storeDisplayValue();
-            const lastNmb=operate(currentOperator,firstNumber,secondNumber);
+            let lastNmb;
+            currentNumber ? 
+                            lastNmb=operate(currentOperator,firstNumber,secondNumber):
+                            lastNmb=operate(currentOperator,secondNumber,firstNumber);
+            populateTopDisplay(firstNumber + " " + currentOperator + " " + secondNumber + "=");
             currentOperator="-"
             storeNumber(lastNmb);
             populateTopDisplay(lastNmb+" -");
@@ -234,7 +247,11 @@ multiplyBtn.addEventListener("click",()=>{
             storeDisplayValue();
         } else {
             storeDisplayValue();
-            const lastNmb=operate(currentOperator,firstNumber,secondNumber);
+            let lastNmb;
+            currentNumber ? 
+                            lastNmb=operate(currentOperator,firstNumber,secondNumber):
+                            lastNmb=operate(currentOperator,secondNumber,firstNumber);
+            populateTopDisplay(firstNumber + " " + currentOperator + " " + secondNumber + "=");
             currentOperator="×"
             storeNumber(lastNmb);
             populateTopDisplay(lastNmb+" ×");
@@ -251,7 +268,11 @@ divideBtn.addEventListener("click",()=>{
             storeDisplayValue();
         } else {
             storeDisplayValue();
-            const lastNmb=operate(currentOperator,firstNumber,secondNumber);
+            let lastNmb;
+            currentNumber ? 
+                            lastNmb=operate(currentOperator,firstNumber,secondNumber):
+                            lastNmb=operate(currentOperator,secondNumber,firstNumber);
+            populateTopDisplay(firstNumber + " " + currentOperator + " " + secondNumber + "=");
             currentOperator="÷"
             storeNumber(lastNmb);
             populateTopDisplay(lastNmb+" ÷");
